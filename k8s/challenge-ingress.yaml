@@ -1,0 +1,47 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: challenge-ingress
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /conversion(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: conversion-challenge
+            port:
+              number: 8092
+      - path: /purchase(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: purchase-challenge
+            port:
+              number: 8093
+      - path: /report(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: report-challenge
+            port:
+              number: 8094
+      - path: /vehicle(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: vehicle-challenge
+            port:
+              number: 8091
+      - path: /rabbitmq(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: rabbitmq
+            port:
+              number: 15672
